@@ -132,7 +132,7 @@ async def login_for_access_token(
     return {
         "access_token": access_token,
         "token_type": "bearer",
-        "user_id": user.id,  # Incluez l'ID utilisateur ici
+        "user_id": user.id,
     }
 
 
@@ -149,12 +149,8 @@ def read_clothing_items(
     skip: int = 0,
     limit: int = 1000,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(
-        get_current_user
-    ),  # Utilisez current_user pour accéder à l'user_id
+    current_user: models.User = Depends(get_current_user),
 ):
-    # Assurez-vous que la fonction get_clothing_items_by_user_id existe dans votre module crud
-    # Cette fonction devrait filtrer les éléments de vêtement en fonction de user_id
     clothing_items = crud.get_clothing_items_by_user_id(
         db, user_id=current_user.id, skip=skip, limit=limit
     )
@@ -162,7 +158,11 @@ def read_clothing_items(
 
 
 @app.get("/clothing-items/{item_id}/", response_model=schemas.ClothingItem)
-def read_clothing_item(item_id: int, db: Session = Depends(get_db)):
+def read_clothing_item(
+    item_id: int,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
     db_item = crud.get_clothing_item_by_id(db, item_id=item_id)
     if db_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
@@ -172,11 +172,10 @@ def read_clothing_item(item_id: int, db: Session = Depends(get_db)):
 @app.put("/edit-clothing/{item_id}/", response_model=schemas.ClothingItem)
 def update_clothing_item(
     item_id: int,
-    item_update: schemas.ClothingItemCreate,  # Utilisez le même schéma que pour la création, ou créez-en un spécifique pour la mise à jour si nécessaire
+    item_update: schemas.ClothingItemCreate,
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):
-    # Assurez-vous que la fonction update_clothing_item existe dans votre module crud et qu'elle gère la mise à jour de l'élément
     updated_item = crud.update_clothing_item(
         db, item_id=item_id, item_update=item_update, user_id=current_user.id
     )
@@ -186,18 +185,22 @@ def update_clothing_item(
 
 
 @app.get("/clothing-categories/", response_model=List[schemas.ClothingCategory])
-def read_categories(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_categories(
+    skip: int = 0,
+    limit: int = 100,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
     print("CATEGORY CHOOSE")
     categories = crud.get_categories(db, skip=skip, limit=limit)
     return categories
 
 
-@app.post(
-    "/new-clothing/", response_model=schemas.ClothingItem
-)  # URL harmonisée avec Angular
+@app.post("/new-clothing/", response_model=schemas.ClothingItem)
 def create_clothing_item(
-    clothing_item: schemas.ClothingItemCreate,  # Utilisez un schéma qui inclut user_id et category_id
+    clothing_item: schemas.ClothingItemCreate,
     db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
 ):
     return crud.create_clothing_item(db=db, clothing_item=clothing_item)
 
