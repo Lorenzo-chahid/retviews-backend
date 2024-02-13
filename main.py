@@ -6,12 +6,7 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
-from . import (
-    crud,
-    models,
-    schemas,
-    database,
-)
+import crud, models, schemas, database
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 
