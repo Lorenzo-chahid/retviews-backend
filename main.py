@@ -39,6 +39,16 @@ def get_db():
         db.close()
 
 
+def populate_categories_if_empty(db: Session):
+    if db.query(models.ClothingCategory).count() == 0:
+        categories = ["nice to have", "wishlist", "bought"]
+        for category_name in categories:
+            category = models.ClothingCategory(name=category_name)
+            db.add(category)
+        db.commit()
+        print("Add 🚀")
+
+
 def get_current_user(
     db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
 ):
@@ -205,6 +215,7 @@ def create_clothing_item(
     return crud.create_clothing_item(db=db, clothing_item=clothing_item)
 
 
-db = database.SessionLocal()
-populate_db_with_clothing_data(db)
-db.close()
+if __name__ == "__main__":
+    db = database.SessionLocal()
+    populate_categories_if_empty(db)
+    db.close()
