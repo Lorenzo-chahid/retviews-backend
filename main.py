@@ -17,9 +17,7 @@ SECRET_KEY = "8B478AD74FB2D4DBD7EA2DDA83B14"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-origins = [
-    "http://localhost:4200",
-]
+origins = ["http://localhost:4200", "https://retchad.onrender.com"]
 
 app.add_middleware(
     CORSMiddleware,
