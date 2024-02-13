@@ -187,7 +187,7 @@ def update_clothing_item(
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(get_current_user),
 ):
-    # Récupérer l'objet ClothingItem existant
+
     db_item = crud.get_clothing_item_by_id(db, item_id=item_id)
     if db_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
@@ -196,7 +196,6 @@ def update_clothing_item(
             status_code=403, detail="Not authorized to update this item"
         )
 
-    # Mise à jour des champs existants avec les nouvelles valeurs si elles sont fournies
     if item_update.name is not None:
         db_item.name = item_update.name
     if item_update.description is not None:
