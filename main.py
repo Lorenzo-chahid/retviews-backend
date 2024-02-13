@@ -104,6 +104,7 @@ def get_password_hash(password):
 
 def authenticate_user(db: Session, username: str, password: str):
     print("AUTHENTICATE")
+    populate_categories_if_empty(db)
     user = crud.get_user_by_username(db, username=username)
     if not user:
         return False
