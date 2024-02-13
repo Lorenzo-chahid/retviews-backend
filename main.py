@@ -162,6 +162,7 @@ def read_clothing_items(
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):
+    print("HERE USER LOLO ::  ", current_user)
     clothing_items = crud.get_clothing_items_by_user_id(
         db, user_id=current_user.id, skip=skip, limit=limit
     )
@@ -187,7 +188,7 @@ def update_clothing_item(
     current_user: models.User = Depends(get_current_user),
 ):
     updated_item = crud.update_clothing_item(
-        db, item_id=item_id, item_update=item_update, user_id=current_user.id
+        db, item_id=item_id, item_update=item_update, user_id=1
     )
     if updated_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
