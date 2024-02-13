@@ -187,6 +187,7 @@ def update_clothing_item(
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):
+    print(f"DATA : {item_id}  {item_update}   --- {current_user}")
     updated_item = crud.update_clothing_item(
         db, item_id=item_id, item_update=item_update, user_id=1
     )
