@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Glamorous Outdoor Fashion",
+    "description": "Portrait of a glamorous young Parisian woman in autumn fashion outfit.",
+    "image_url": "https://img.freepik.com/photos-gratuite/portrait-mode-plein-air-glamour-sensuelle-jeune-femme-noire-elegante-portant-tenue-automne-mode-pull-velours-gris-manteau-laine-beige_273443-1927.jpg?w=2000&t=st=1707744991~exp=1707745591~hmac=fa2acf17134df1cae2730deeef8645e395f47c62ae41ce2ad03967b878f30f2e",
+    "category": "Nice to have"
+  },
+  {
+    "name": "Elegant Beret Look",
+    "description": "Beautiful young Parisian woman with brown hair in elegant beret and trench coat.",
+    "image_url": "https://img.freepik.com/photos-gratuite/belle-jeune-femme-parisienne-aux-cheveux-bruns-beret-elegant-trench-coat-beige-sac-noir-debout-vieux-escaliers-posant-sensibilite-exterieur_197531-24472.jpg?w=2000&t=st=1707745752~exp=1707746352~hmac=c3e4090c9255a87fe9baa3aefa4573b3553f124a35468074b2b22f4ec8e7e81d",
+    "category": "Bought"
+  },
+  {
+    "name": "White Hoodie Mockup",
+    "description": "Mockup of a white hoodie in a casual style.",
+    "image_url": "https://img.freepik.com/psd-gratuit/maquette-sweat-capuche-blanc_1409-3754.jpg?size=626&ext=jpg&ga=GA1.1.1205079306.1707668033&semt=sph",
+    "category": "Whislist"
+  },
+  {
+    "name": "Premium Hoodie Mockup",
+    "description": "Premium quality hoodie mockup in dark color.",
+    "image_url": "https://img.freepik.com/psd-premium/maquette-capuche_75503-888.jpg?size=626&ext=jpg&ga=GA1.1.1205079306.1707668033&semt=sph",
+    "category": "Whislist"
+  },
+  {
+    "name": "Logo Design Mockup",
+    "description": "A creative mockup for logo design on a casual t-shirt.",
+    "image_url": "https://img.freepik.com/psd-gratuit/logo-maquette-conception_1310-71.jpg?size=626&ext=jpg&ga=GA1.1.1205079306.1707668033&semt=sph",
+    "category": "Whislist"
+  }
+]
