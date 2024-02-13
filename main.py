@@ -196,12 +196,7 @@ def update_clothing_item(
 
 
 @app.get("/clothing-categories/", response_model=List[schemas.ClothingCategory])
-def read_categories(
-    skip: int = 0,
-    limit: int = 100,
-    db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user),
-):
+def read_categories(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     print("CATEGORY CHOOSE")
     categories = crud.get_categories(db, skip=skip, limit=limit)
     return categories
