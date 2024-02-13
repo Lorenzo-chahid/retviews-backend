@@ -52,3 +52,10 @@ class ClothingItem(ClothingItemBase):
 
     class Config:
         from_attributes = True
+
+
+class ClothingItemUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    image_url: Optional[str] = None
+    category_id: Optional[int] = None

@@ -1,6 +1,6 @@
 import json
 from typing import List
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, Path
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
@@ -182,18 +182,34 @@ def read_clothing_item(
 
 @app.put("/edit-clothing/{item_id}/", response_model=schemas.ClothingItem)
 def update_clothing_item(
-    item_id: int,
-    item_update: schemas.ClothingItemCreate,
-    db: Session = Depends(get_db),
+    item_id: int = Path(..., title="The ID of the item to update"),
+    item_update: schemas.ClothingItemUpdate = Depends(),
+    db: Session = Depends(database.get_db),
     current_user: models.User = Depends(get_current_user),
 ):
-    print(f"DATA : {item_id}  {item_update}   --- {current_user}")
-    updated_item = crud.update_clothing_item(
-        db, item_id=item_id, item_update=item_update, user_id=1
-    )
-    if updated_item is None:
+    # Récupérer l'objet ClothingItem existant
+    db_item = crud.get_clothing_item_by_id(db, item_id=item_id)
+    if db_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
-    return updated_item
+    if db_item.user_id != current_user.id:
+        raise HTTPException(
+            status_code=403, detail="Not authorized to update this item"
+        )
+
+    # Mise à jour des champs existants avec les nouvelles valeurs si elles sont fournies
+    if item_update.name is not None:
+        db_item.name = item_update.name
+    if item_update.description is not None:
+        db_item.description = item_update.description
+    if item_update.image_url is not None:
+        db_item.image_url = item_update.image_url
+    if item_update.category_id is not None:
+        db_item.category_id = item_update.category_id
+
+    db.commit()
+    db.refresh(db_item)
+
+    return db_item
 
 
 @app.get("/clothing-categories/", response_model=List[schemas.ClothingCategory])
