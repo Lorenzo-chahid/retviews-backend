@@ -206,7 +206,6 @@ def read_categories(skip: int = 0, limit: int = 100, db: Session = Depends(get_d
 def create_clothing_item(
     clothing_item: schemas.ClothingItemCreate,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user),
 ):
     return crud.create_clothing_item(db=db, clothing_item=clothing_item)
 
