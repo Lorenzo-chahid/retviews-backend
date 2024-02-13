@@ -172,7 +172,6 @@ def read_clothing_items(
 def read_clothing_item(
     item_id: int,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user),
 ):
     db_item = crud.get_clothing_item_by_id(db, item_id=item_id)
     if db_item is None:
