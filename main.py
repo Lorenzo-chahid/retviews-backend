@@ -1,5 +1,4 @@
 import json
-import logging
 from typing import List
 from fastapi import FastAPI, Depends, HTTPException, status, Path
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -17,9 +16,6 @@ app = FastAPI()
 SECRET_KEY = "8B478AD74FB2D4DBD7EA2DDA83B14"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 origins = ["http://localhost:4200", "https://retchad.onrender.com"]
@@ -66,19 +62,19 @@ def get_current_user(
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
-            logger.error("Token payload does not contain username.")
+            print("Token payload does not contain username.")
             raise credentials_exception
-        logger.info(f"Token payload decoded successfully for username: {username}")
+        print(f"Token payload decoded successfully for username: {username}")
     except JWTError as e:
-        logger.error(f"Token decoding failed: {str(e)}")
+        print(f"Token decoding failed: {str(e)}")
         raise credentials_exception
 
     user = crud.get_user_by_username(db, username=username)
     if user is None:
-        logger.error(f"User not found: {username}")
+        print(f"User not found: {username}")
         raise credentials_exception
 
-    logger.info(f"User authenticated successfully: {user.username}")
+    print(f"User authenticated successfully: {user.username}")
     return user
 
 
